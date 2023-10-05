@@ -95,7 +95,7 @@ export default function Onboarding() {
                     return;
                 }
                 setStudent(prev => ({ ...prev, email: input }));
-                setQuestion("Please provide your Google Calendar link.");
+                setQuestion("Please provide your Canvas Calendar link.");
                 break;
             case 2:
                 setCalendarLink(input);
