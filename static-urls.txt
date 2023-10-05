@@ -1,3 +1,0 @@
-http://localhost:3000/
-http://localhost:3000/one
-http://localhost:3000/two

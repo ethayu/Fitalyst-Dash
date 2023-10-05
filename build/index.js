@@ -1,46 +1,23 @@
-var __create = Object.create;
 var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf, __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: !0 });
-}, __copyProps = (to, from, except, desc) => {
-  if (from && typeof from == "object" || typeof from == "function")
-    for (let key of __getOwnPropNames(from))
-      !__hasOwnProp.call(to, key) && key !== except && __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: !0 }) : target,
-  mod
-)), __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: !0 }), mod);
 
-// <stdin>
-var stdin_exports = {};
-__export(stdin_exports, {
-  assets: () => assets_manifest_default,
-  assetsBuildDirectory: () => assetsBuildDirectory,
-  entry: () => entry,
-  future: () => future,
-  publicPath: () => publicPath,
-  routes: () => routes
-});
-module.exports = __toCommonJS(stdin_exports);
-
-// node_modules/@remix-run/dev/dist/config/defaults/node/entry.server.react-stream.tsx
-var entry_server_react_stream_exports = {};
-__export(entry_server_react_stream_exports, {
+// node_modules/@remix-run/dev/dist/config/defaults/entry.server.node.tsx
+var entry_server_node_exports = {};
+__export(entry_server_node_exports, {
   default: () => handleRequest
 });
-var import_stream = require("stream"), import_node = require("@remix-run/node"), import_react = require("@remix-run/react"), import_isbot = __toESM(require("isbot")), import_server = require("react-dom/server"), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), ABORT_DELAY = 5e3;
+import { PassThrough } from "node:stream";
+import { createReadableStreamFromReadable } from "@remix-run/node";
+import { RemixServer } from "@remix-run/react";
+import isbot from "isbot";
+import { renderToPipeableStream } from "react-dom/server";
+import { jsxDEV } from "react/jsx-dev-runtime";
+var ABORT_DELAY = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext) {
-  return (0, import_isbot.default)(request.headers.get("user-agent")) ? handleBotRequest(
+  return isbot(request.headers.get("user-agent")) ? handleBotRequest(
     request,
     responseStatusCode,
     responseHeaders,
@@ -54,9 +31,9 @@ function handleRequest(request, responseStatusCode, responseHeaders, remixContex
 }
 function handleBotRequest(request, responseStatusCode, responseHeaders, remixContext) {
   return new Promise((resolve, reject) => {
-    let shellRendered = !1, { pipe, abort } = (0, import_server.renderToPipeableStream)(
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(
-        import_react.RemixServer,
+    let shellRendered = !1, { pipe, abort } = renderToPipeableStream(
+      /* @__PURE__ */ jsxDEV(
+        RemixServer,
         {
           context: remixContext,
           url: request.url,
@@ -65,7 +42,7 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
         void 0,
         !1,
         {
-          fileName: "node_modules/@remix-run/dev/dist/config/defaults/node/entry.server.react-stream.tsx",
+          fileName: "node_modules/@remix-run/dev/dist/config/defaults/entry.server.node.tsx",
           lineNumber: 42,
           columnNumber: 7
         },
@@ -74,9 +51,9 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
       {
         onAllReady() {
           shellRendered = !0;
-          let body = new import_stream.PassThrough();
+          let body = new PassThrough(), stream = createReadableStreamFromReadable(body);
           responseHeaders.set("Content-Type", "text/html"), resolve(
-            new import_node.Response(body, {
+            new Response(stream, {
               headers: responseHeaders,
               status: responseStatusCode
             })
@@ -95,9 +72,9 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
 }
 function handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext) {
   return new Promise((resolve, reject) => {
-    let shellRendered = !1, { pipe, abort } = (0, import_server.renderToPipeableStream)(
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(
-        import_react.RemixServer,
+    let shellRendered = !1, { pipe, abort } = renderToPipeableStream(
+      /* @__PURE__ */ jsxDEV(
+        RemixServer,
         {
           context: remixContext,
           url: request.url,
@@ -106,8 +83,8 @@ function handleBrowserRequest(request, responseStatusCode, responseHeaders, remi
         void 0,
         !1,
         {
-          fileName: "node_modules/@remix-run/dev/dist/config/defaults/node/entry.server.react-stream.tsx",
-          lineNumber: 91,
+          fileName: "node_modules/@remix-run/dev/dist/config/defaults/entry.server.node.tsx",
+          lineNumber: 92,
           columnNumber: 7
         },
         this
@@ -115,9 +92,9 @@ function handleBrowserRequest(request, responseStatusCode, responseHeaders, remi
       {
         onShellReady() {
           shellRendered = !0;
-          let body = new import_stream.PassThrough();
+          let body = new PassThrough(), stream = createReadableStreamFromReadable(body);
           responseHeaders.set("Content-Type", "text/html"), resolve(
-            new import_node.Response(body, {
+            new Response(stream, {
               headers: responseHeaders,
               status: responseStatusCode
             })
@@ -141,24 +118,25 @@ __export(root_exports, {
   default: () => App,
   links: () => links
 });
-var import_react2 = require("@remix-run/react");
+import { LiveReload, Outlet, Links, Scripts } from "@remix-run/react";
 
 // app/tailwind.css
 var tailwind_default = "/build/_assets/tailwind-2T7QZ4BC.css";
 
 // app/root.tsx
-var import_jsx_dev_runtime2 = require("react/jsx-dev-runtime"), links = () => [
+import { jsxDEV as jsxDEV2 } from "react/jsx-dev-runtime";
+var links = () => [
   { rel: "stylesheet", href: tailwind_default }
 ];
 function App() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("html", { lang: "en", className: "scroll-smooth", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("head", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("meta", { charSet: "utf-8" }, void 0, !1, {
+  return /* @__PURE__ */ jsxDEV2("html", { lang: "en", className: "scroll-smooth", children: [
+    /* @__PURE__ */ jsxDEV2("head", { children: [
+      /* @__PURE__ */ jsxDEV2("meta", { charSet: "utf-8" }, void 0, !1, {
         fileName: "app/root.tsx",
         lineNumber: 16,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(
+      /* @__PURE__ */ jsxDEV2(
         "meta",
         {
           name: "viewport",
@@ -173,7 +151,7 @@ function App() {
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.Links, {}, void 0, !1, {
+      /* @__PURE__ */ jsxDEV2(Links, {}, void 0, !1, {
         fileName: "app/root.tsx",
         lineNumber: 21,
         columnNumber: 9
@@ -183,18 +161,18 @@ function App() {
       lineNumber: 15,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("body", { className: "bg-gradient-to-tr from-fitalyst-green to-fitalyst-orange no-scrollbar h-[200vh]", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.LiveReload, {}, void 0, !1, {
+    /* @__PURE__ */ jsxDEV2("body", { className: "bg-gradient-to-tr from-fitalyst-green to-fitalyst-orange no-scrollbar h-[200vh]", children: [
+      /* @__PURE__ */ jsxDEV2(LiveReload, {}, void 0, !1, {
         fileName: "app/root.tsx",
         lineNumber: 24,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.Outlet, {}, void 0, !1, {
+      /* @__PURE__ */ jsxDEV2(Outlet, {}, void 0, !1, {
         fileName: "app/root.tsx",
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(import_react2.Scripts, {}, void 0, !1, {
+      /* @__PURE__ */ jsxDEV2(Scripts, {}, void 0, !1, {
         fileName: "app/root.tsx",
         lineNumber: 26,
         columnNumber: 9
@@ -217,8 +195,10 @@ __export(onboarding_exports, {
   default: () => Onboarding,
   links: () => links2
 });
-var import_react_router_dom = require("react-router-dom");
-var import_react3 = require("react"), import_jsx_dev_runtime3 = require("react/jsx-dev-runtime"), links2 = () => [
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
+var links2 = () => [
   { rel: "stylesheet", href: tailwind_default }
 ], Student = class {
   constructor(_id, name, email, calendarLink, originalCalendarLink, bedtime, emojis = []) {
@@ -226,7 +206,7 @@ var import_react3 = require("react"), import_jsx_dev_runtime3 = require("react/j
   }
 };
 function Onboarding() {
-  let navigate = (0, import_react_router_dom.useNavigate)(), [student, setStudent] = (0, import_react3.useState)(new Student("", "")), [page, setPage] = (0, import_react3.useState)(0), [question, setQuestion] = (0, import_react3.useState)("What is your name?"), [input, setInput] = (0, import_react3.useState)(""), [type, setType] = (0, import_react3.useState)("text"), [calendarLink, setCalendarLink] = (0, import_react3.useState)(""), [bedtime, setBedtime] = (0, import_react3.useState)("23:00"), [emojis, setEmojis] = (0, import_react3.useState)([]);
+  let navigate = useNavigate(), [student, setStudent] = useState(new Student("", "")), [page, setPage] = useState(0), [question, setQuestion] = useState("What is your name?"), [input, setInput] = useState(""), [type, setType] = useState("text"), [calendarLink, setCalendarLink] = useState(""), [bedtime, setBedtime] = useState("23:00"), [emojis, setEmojis] = useState([]);
   async function createStudent(bedtimeValue) {
     try {
       let response = await fetch("http://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002/students", {
@@ -279,8 +259,8 @@ function Onboarding() {
     }
     setPage(page + 1);
   }
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "h-screen", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "flex flex-col space-y-10 justify-center h-full", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "text-white font-bold text-5xl place-self-center", children: [
+  return /* @__PURE__ */ jsxDEV3("div", { className: "h-screen", children: /* @__PURE__ */ jsxDEV3("div", { className: "flex flex-col space-y-10 justify-center h-full", children: [
+    /* @__PURE__ */ jsxDEV3("p", { className: "text-white font-bold text-5xl place-self-center", children: [
       " ",
       question,
       " "
@@ -289,7 +269,7 @@ function Onboarding() {
       lineNumber: 123,
       columnNumber: 17
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+    /* @__PURE__ */ jsxDEV3(
       "input",
       {
         className: "h-20 text-black font-bold text-5xl place-self-center",
@@ -309,8 +289,8 @@ function Onboarding() {
       },
       this
     ),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "place-self-center", children: [
-      page !== 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+    /* @__PURE__ */ jsxDEV3("div", { className: "place-self-center", children: [
+      page !== 0 && /* @__PURE__ */ jsxDEV3(
         "button",
         {
           className: "text-white background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
@@ -341,7 +321,7 @@ function Onboarding() {
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(
+      /* @__PURE__ */ jsxDEV3(
         "button",
         {
           className: "text-white background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
@@ -383,8 +363,11 @@ __export(index_exports, {
   default: () => Dash,
   links: () => links3
 });
-var import_react4 = require("react"), import_react_router_dom2 = require("react-router-dom");
-var ICAL = __toESM(require("ical.js")), import_jsx_dev_runtime4 = require("react/jsx-dev-runtime"), links3 = () => [
+import { useState as useState2, useEffect as useEffect2, useRef } from "react";
+import { useNavigate as useNavigate2 } from "react-router-dom";
+import * as ICAL from "ical.js";
+import { Fragment, jsxDEV as jsxDEV4 } from "react/jsx-dev-runtime";
+var links3 = () => [
   { rel: "stylesheet", href: tailwind_default }
 ], BASE_API_URL = "http://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002", Student2 = class {
   constructor(_id, name, email, calendarLink, originalCalendarLink, bedtime, emojis = []) {
@@ -396,11 +379,11 @@ var ICAL = __toESM(require("ical.js")), import_jsx_dev_runtime4 = require("react
   }
 };
 function Dash() {
-  let bottomRef = (0, import_react4.useRef)(null), navigate = (0, import_react_router_dom2.useNavigate)(), [showSettings, setShowSettings] = (0, import_react4.useState)(!1), [showEmotes, setShowEmotes] = (0, import_react4.useState)(!0), [response, setResponse] = (0, import_react4.useState)(""), [signedIn, setSignedIn] = (0, import_react4.useState)(!1), [assignments, setAssignments] = (0, import_react4.useState)([]), [currentStudent, setCurrentStudent] = (0, import_react4.useState)(null), [bedtime, setBedtime] = (0, import_react4.useState)((currentStudent == null ? void 0 : currentStudent.bedtime) || ""), [name, setName] = (0, import_react4.useState)((currentStudent == null ? void 0 : currentStudent.name) || ""), [calendarLink, setCalendarLink] = (0, import_react4.useState)((currentStudent == null ? void 0 : currentStudent.calendarLink) || ""), [originalCalendarLink, setOriginalCalendarLink] = (0, import_react4.useState)((currentStudent == null ? void 0 : currentStudent.originalCalendarLink) || ""), [email, setEmail] = (0, import_react4.useState)((currentStudent == null ? void 0 : currentStudent.email) || ""), storedStudentId = typeof window < "u" ? localStorage.getItem("studentId") : null;
+  let bottomRef = useRef(null), navigate = useNavigate2(), [showSettings, setShowSettings] = useState2(!1), [showEmotes, setShowEmotes] = useState2(!0), [response, setResponse] = useState2(""), [signedIn, setSignedIn] = useState2(!1), [assignments, setAssignments] = useState2([]), [currentStudent, setCurrentStudent] = useState2(null), [bedtime, setBedtime] = useState2(currentStudent?.bedtime || ""), [name, setName] = useState2(currentStudent?.name || ""), [calendarLink, setCalendarLink] = useState2(currentStudent?.calendarLink || ""), [originalCalendarLink, setOriginalCalendarLink] = useState2(currentStudent?.originalCalendarLink || ""), [email, setEmail] = useState2(currentStudent?.email || ""), storedStudentId = typeof window < "u" ? localStorage.getItem("studentId") : null;
   function isSignedIn() {
     return !0;
   }
-  let [students, setStudents] = (0, import_react4.useState)([]), fetchStudentData = async () => {
+  let [students, setStudents] = useState2([]), fetchStudentData = async () => {
     try {
       let response2 = await fetch(`${BASE_API_URL}/students`);
       if (response2.ok) {
@@ -433,11 +416,11 @@ function Dash() {
       console.error("Error fetching and parsing ICS:", error);
     }
   };
-  (0, import_react4.useEffect)(() => {
+  useEffect2(() => {
     document.body.style.overflow = "hidden", isSignedIn() || navigate("/onboarding"), storedStudentId ? fetchStudentDataById(storedStudentId) : fetchStudentData();
-  }, []), (0, import_react4.useEffect)(() => {
-    setName((currentStudent == null ? void 0 : currentStudent.name) || ""), setCalendarLink((currentStudent == null ? void 0 : currentStudent.calendarLink) || ""), setEmail((currentStudent == null ? void 0 : currentStudent.email) || ""), setBedtime((currentStudent == null ? void 0 : currentStudent.bedtime) || "");
-  }, [currentStudent]), (0, import_react4.useEffect)(() => {
+  }, []), useEffect2(() => {
+    setName(currentStudent?.name || ""), setCalendarLink(currentStudent?.calendarLink || ""), setEmail(currentStudent?.email || ""), setBedtime(currentStudent?.bedtime || "");
+  }, [currentStudent]), useEffect2(() => {
     currentStudent && currentStudent._id && localStorage.setItem("studentId", currentStudent._id);
   }, [currentStudent]);
   let fetchStudentDataById = async (_id) => {
@@ -521,7 +504,7 @@ function Dash() {
     }
     let emojiEvent = { emoji: emote, timestamp: /* @__PURE__ */ new Date() };
     try {
-      let studentId = currentStudent == null ? void 0 : currentStudent._id;
+      let studentId = currentStudent?._id;
       if (!studentId) {
         console.error("Student ID is not available.");
         return;
@@ -574,16 +557,16 @@ function Dash() {
       setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed), leapY -= step, leapY < stopY && (leapY = stopY), timer++;
     return !1;
   }
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "scroll-smooth", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "h-[100vh]", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col space-y-10 justify-center h-full", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row place-self-center", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("img", { src: "icons/Carrot_GreenHalo.svg", className: "place-self-center bg-contain w-96 h-96" }, void 0, !1, {
+  return /* @__PURE__ */ jsxDEV4("div", { className: "scroll-smooth", children: [
+    /* @__PURE__ */ jsxDEV4("div", { className: "h-[100vh]", children: [
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col space-y-10 justify-center h-full", children: [
+        /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row place-self-center", children: [
+          /* @__PURE__ */ jsxDEV4("img", { src: "icons/Carrot_GreenHalo.svg", className: "place-self-center bg-contain w-96 h-96" }, void 0, !1, {
             fileName: "app/routes/_index.tsx",
             lineNumber: 353,
             columnNumber: 25
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Countdown, { assignments, bedtime }, void 0, !1, {
+          /* @__PURE__ */ jsxDEV4(Countdown, { assignments, bedtime }, void 0, !1, {
             fileName: "app/routes/_index.tsx",
             lineNumber: 354,
             columnNumber: 25
@@ -593,34 +576,34 @@ function Dash() {
           lineNumber: 352,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-5xl place-self-center", children: `Hey ${(currentStudent == null ? void 0 : currentStudent.name) || "there"}, it's ${getCurrentDay()}.` }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-5xl place-self-center", children: `Hey ${currentStudent?.name || "there"}, it's ${getCurrentDay()}.` }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 356,
           columnNumber: 21
         }, this),
-        showEmotes ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_jsx_dev_runtime4.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col place-self-center space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-medium text-3xl place-self-center", children: "How are you feeling today?" }, void 0, !1, {
+        showEmotes ? /* @__PURE__ */ jsxDEV4(Fragment, { children: /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col place-self-center space-y-2", children: [
+          /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-medium text-3xl place-self-center", children: "How are you feeling today?" }, void 0, !1, {
             fileName: "app/routes/_index.tsx",
             lineNumber: 360,
             columnNumber: 33
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row place-self-center space-x-2", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("button", { className: "text-5xl", onClick: () => handleClick(1), children: "\u{1F603}" }, void 0, !1, {
+          /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row place-self-center space-x-2", children: [
+            /* @__PURE__ */ jsxDEV4("button", { className: "text-5xl", onClick: () => handleClick(1), children: "\u{1F603}" }, void 0, !1, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 362,
               columnNumber: 37
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("button", { className: "text-5xl", onClick: () => handleClick(2), children: "\u{1F4A9}" }, void 0, !1, {
+            /* @__PURE__ */ jsxDEV4("button", { className: "text-5xl", onClick: () => handleClick(2), children: "\u{1F4A9}" }, void 0, !1, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 363,
               columnNumber: 37
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("button", { className: "text-5xl", onClick: () => handleClick(3), children: "\u{1F614}" }, void 0, !1, {
+            /* @__PURE__ */ jsxDEV4("button", { className: "text-5xl", onClick: () => handleClick(3), children: "\u{1F614}" }, void 0, !1, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 364,
               columnNumber: 37
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("button", { className: "text-5xl", onClick: () => handleClick(4), children: "\u{1F621}" }, void 0, !1, {
+            /* @__PURE__ */ jsxDEV4("button", { className: "text-5xl", onClick: () => handleClick(4), children: "\u{1F621}" }, void 0, !1, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 365,
               columnNumber: 37
@@ -638,14 +621,14 @@ function Dash() {
           fileName: "app/routes/_index.tsx",
           lineNumber: 358,
           columnNumber: 11
-        }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_jsx_dev_runtime4.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col place-self-center space-y-2", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-medium text-3xl place-self-center", children: response }, void 0, !1, {
+        }, this) : /* @__PURE__ */ jsxDEV4(Fragment, { children: [
+          /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col place-self-center space-y-2", children: [
+            /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-medium text-3xl place-self-center", children: response }, void 0, !1, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 371,
               columnNumber: 33
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-medium text-3xl place-self-center", children: "Your halo is red because you have 5 assignments coming up:" }, void 0, !1, {
+            /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-medium text-3xl place-self-center", children: "Your halo is red because you have 5 assignments coming up:" }, void 0, !1, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 372,
               columnNumber: 33
@@ -655,7 +638,7 @@ function Dash() {
             lineNumber: 370,
             columnNumber: 29
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("img", { src: "icons/down-arrow.svg", className: "place-self-center bg-contain absolute bottom-5 animate-bounce cursor-pointer", onClick: () => scrollDown() }, void 0, !1, {
+          /* @__PURE__ */ jsxDEV4("img", { src: "icons/down-arrow.svg", className: "place-self-center bg-contain absolute bottom-5 animate-bounce cursor-pointer", onClick: () => scrollDown() }, void 0, !1, {
             fileName: "app/routes/_index.tsx",
             lineNumber: 374,
             columnNumber: 29
@@ -670,7 +653,7 @@ function Dash() {
         lineNumber: 351,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("button", { className: "fixed bottom-4 left-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("img", { src: "icons/settings.svg", onClick: () => setShowSettings(!0) }, void 0, !1, {
+      /* @__PURE__ */ jsxDEV4("button", { className: "fixed bottom-4 left-4", children: /* @__PURE__ */ jsxDEV4("img", { src: "icons/settings.svg", onClick: () => setShowSettings(!0) }, void 0, !1, {
         fileName: "app/routes/_index.tsx",
         lineNumber: 379,
         columnNumber: 21
@@ -679,13 +662,13 @@ function Dash() {
         lineNumber: 378,
         columnNumber: 17
       }, this),
-      showSettings ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_jsx_dev_runtime4.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+      showSettings ? /* @__PURE__ */ jsxDEV4(Fragment, { children: [
+        /* @__PURE__ */ jsxDEV4(
           "div",
           {
             className: "justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none",
-            children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "relative w-auto my-6 mx-auto max-w-3xl", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "bg-gradient-to-tr from-fitalyst-green to-fitalyst-orange border-2 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none", children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-start justify-between pl-5 pr-5 pt-5 border-solid border-white rounded-t", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-3xl text-white font-bold", children: "Settings" }, void 0, !1, {
+            children: /* @__PURE__ */ jsxDEV4("div", { className: "relative w-auto my-6 mx-auto max-w-3xl", children: /* @__PURE__ */ jsxDEV4("div", { className: "bg-gradient-to-tr from-fitalyst-green to-fitalyst-orange border-2 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none", children: [
+              /* @__PURE__ */ jsxDEV4("div", { className: "flex items-start justify-between pl-5 pr-5 pt-5 border-solid border-white rounded-t", children: /* @__PURE__ */ jsxDEV4("p", { className: "text-3xl text-white font-bold", children: "Settings" }, void 0, !1, {
                 fileName: "app/routes/_index.tsx",
                 lineNumber: 391,
                 columnNumber: 41
@@ -694,14 +677,14 @@ function Dash() {
                 lineNumber: 390,
                 columnNumber: 37
               }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("form", { method: "post", encType: "multipart/form-data", action: "# ", onSubmit: handleSubmit, className: "relative p-6 grid grid-cols-2 grid-flow-row justify-evenly gap-4", children: [
-                /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col space-y-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-fitalyst-orange font-bold text-2xl", children: "Name" }, void 0, !1, {
+              /* @__PURE__ */ jsxDEV4("form", { method: "post", encType: "multipart/form-data", action: "# ", onSubmit: handleSubmit, className: "relative p-6 grid grid-cols-2 grid-flow-row justify-evenly gap-4", children: [
+                /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col space-y-2", children: [
+                  /* @__PURE__ */ jsxDEV4("p", { className: "text-fitalyst-orange font-bold text-2xl", children: "Name" }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 398,
                     columnNumber: 45
                   }, this),
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "text", name: "name", className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", defaultValue: currentStudent == null ? void 0 : currentStudent.name, required: !0 }, void 0, !1, {
+                  /* @__PURE__ */ jsxDEV4("input", { type: "text", name: "name", className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", defaultValue: currentStudent?.name, required: !0 }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 399,
                     columnNumber: 45
@@ -711,13 +694,13 @@ function Dash() {
                   lineNumber: 397,
                   columnNumber: 41
                 }, this),
-                /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col space-y-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-fitalyst-green font-bold text-2xl", children: "Bedtime" }, void 0, !1, {
+                /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col space-y-2", children: [
+                  /* @__PURE__ */ jsxDEV4("p", { className: "text-fitalyst-green font-bold text-2xl", children: "Bedtime" }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 402,
                     columnNumber: 45
                   }, this),
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "time", name: "bedtime", onChange: (e) => setBedtime(e.target.value), value: bedtime, className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", required: !0 }, void 0, !1, {
+                  /* @__PURE__ */ jsxDEV4("input", { type: "time", name: "bedtime", onChange: (e) => setBedtime(e.target.value), value: bedtime, className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", required: !0 }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 403,
                     columnNumber: 45
@@ -727,13 +710,13 @@ function Dash() {
                   lineNumber: 401,
                   columnNumber: 41
                 }, this),
-                /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col space-y-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-fitalyst-orange font-bold text-2xl", children: "Calendar Link" }, void 0, !1, {
+                /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col space-y-2", children: [
+                  /* @__PURE__ */ jsxDEV4("p", { className: "text-fitalyst-orange font-bold text-2xl", children: "Calendar Link" }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 406,
                     columnNumber: 45
                   }, this),
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "text", name: "originalCalendarLink", className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", value: originalCalendarLink, onChange: handleOriginalCalendarLinkChange, required: !0 }, void 0, !1, {
+                  /* @__PURE__ */ jsxDEV4("input", { type: "text", name: "originalCalendarLink", className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", value: originalCalendarLink, onChange: handleOriginalCalendarLinkChange, required: !0 }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 407,
                     columnNumber: 45
@@ -743,13 +726,13 @@ function Dash() {
                   lineNumber: 405,
                   columnNumber: 41
                 }, this),
-                /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col space-y-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-fitalyst-green font-bold text-2xl", children: "Email" }, void 0, !1, {
+                /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col space-y-2", children: [
+                  /* @__PURE__ */ jsxDEV4("p", { className: "text-fitalyst-green font-bold text-2xl", children: "Email" }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 412,
                     columnNumber: 45
                   }, this),
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "email", name: "email", className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", defaultValue: currentStudent == null ? void 0 : currentStudent.email, required: !0 }, void 0, !1, {
+                  /* @__PURE__ */ jsxDEV4("input", { type: "email", name: "email", className: "bg-fitalyst-light-blue border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", defaultValue: currentStudent?.email, required: !0 }, void 0, !1, {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 413,
                     columnNumber: 45
@@ -759,8 +742,8 @@ function Dash() {
                   lineNumber: 411,
                   columnNumber: 41
                 }, this),
-                /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center justify-end p-6 rounded-b", children: [
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+                /* @__PURE__ */ jsxDEV4("div", { className: "flex items-center justify-end p-6 rounded-b", children: [
+                  /* @__PURE__ */ jsxDEV4(
                     "button",
                     {
                       className: "text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
@@ -777,7 +760,7 @@ function Dash() {
                     },
                     this
                   ),
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+                  /* @__PURE__ */ jsxDEV4(
                     "button",
                     {
                       className: "bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
@@ -799,7 +782,7 @@ function Dash() {
                   lineNumber: 419,
                   columnNumber: 41
                 }, this),
-                currentStudent != null && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+                currentStudent != null && /* @__PURE__ */ jsxDEV4(
                   "button",
                   {
                     className: "bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
@@ -840,7 +823,7 @@ function Dash() {
           },
           this
         ),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "opacity-25 fixed inset-0 z-40 bg-black" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("div", { className: "opacity-25 fixed inset-0 z-40 bg-black" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 447,
           columnNumber: 25
@@ -855,14 +838,14 @@ function Dash() {
       lineNumber: 350,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col w-full h-[100vh]", ref: bottomRef, children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("img", { src: "icons/up-arrow.svg", className: "bg-contain place-self-center animate-bounce cursor-pointer p-8", onClick: () => scrollUp() }, void 0, !1, {
+    /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col w-full h-[100vh]", ref: bottomRef, children: [
+      /* @__PURE__ */ jsxDEV4("img", { src: "icons/up-arrow.svg", className: "bg-contain place-self-center animate-bounce cursor-pointer p-8", onClick: () => scrollUp() }, void 0, !1, {
         fileName: "app/routes/_index.tsx",
         lineNumber: 452,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col justify-center gap-0", children: assignments.sort((a, b) => a.date.toLocaleString() < b.date.toLocaleString() ? -1 : 1).slice(0, 5).map(
-        (assignment) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(AssignmentTile, { ...assignment }, assignment._id, !1, {
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col justify-center gap-0", children: assignments.sort((a, b) => a.date.toLocaleString() < b.date.toLocaleString() ? -1 : 1).slice(0, 5).map(
+        (assignment) => /* @__PURE__ */ jsxDEV4(AssignmentTile, { ...assignment }, assignment._id, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 455,
           columnNumber: 11
@@ -884,8 +867,8 @@ function Dash() {
   }, this);
 }
 function Countdown(props) {
-  let [date, setDate] = (0, import_react4.useState)(/* @__PURE__ */ new Date());
-  (0, import_react4.useEffect)(() => {
+  let [date, setDate] = useState2(/* @__PURE__ */ new Date());
+  useEffect2(() => {
     let intervalId = setInterval(() => {
       setDate(/* @__PURE__ */ new Date());
     }, 1e3);
@@ -904,15 +887,15 @@ function Countdown(props) {
   } else
     var text = "'til";
   var days = Math.floor(distance / (1e3 * 60 * 60 * 24)) < 10 ? "0" + Math.floor(distance / (1e3 * 60 * 60 * 24)) : Math.floor(distance / (1e3 * 60 * 60 * 24)), hours = Math.floor(distance % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60)) < 10 ? "0" + Math.floor(distance % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60)) : Math.floor(distance % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60)), minutes = Math.floor(distance % (1e3 * 60 * 60) / (1e3 * 60)) < 10 ? "0" + Math.floor(distance % (1e3 * 60 * 60) / (1e3 * 60)) : Math.floor(distance % (1e3 * 60 * 60) / (1e3 * 60)), seconds = Math.floor(distance % (1e3 * 60) / 1e3) < 10 ? "0" + Math.floor(distance % (1e3 * 60) / 1e3) : Math.floor(distance % (1e3 * 60) / 1e3);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col place-self-center place-items-end", children: [
-    days == 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "grid grid-cols-3", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row px-2 place-items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-9xl tabular-nums", children: hours }, void 0, !1, {
+  return /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-col place-self-center place-items-end", children: [
+    days == 0 && /* @__PURE__ */ jsxDEV4("div", { className: "grid grid-cols-3", children: [
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row px-2 place-items-end", children: [
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-9xl tabular-nums", children: hours }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 517,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-light text-6xl", children: "h" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-light text-6xl", children: "h" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 518,
           columnNumber: 21
@@ -922,13 +905,13 @@ function Countdown(props) {
         lineNumber: 516,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row px-2 place-items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-9xl tabular-nums", children: minutes }, void 0, !1, {
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row px-2 place-items-end", children: [
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-9xl tabular-nums", children: minutes }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 521,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-light text-6xl", children: "m" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-light text-6xl", children: "m" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 522,
           columnNumber: 21
@@ -938,13 +921,13 @@ function Countdown(props) {
         lineNumber: 520,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row px-2 place-items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-9xl tabular-nums", children: seconds }, void 0, !1, {
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row px-2 place-items-end", children: [
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-9xl tabular-nums", children: seconds }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 525,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-light text-6xl", children: "s" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-light text-6xl", children: "s" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 526,
           columnNumber: 21
@@ -959,14 +942,14 @@ function Countdown(props) {
       lineNumber: 515,
       columnNumber: 27
     }, this),
-    days != 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "grid grid-cols-4", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row px-2 place-items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-9xl tabular-nums", children: days }, void 0, !1, {
+    days != 0 && /* @__PURE__ */ jsxDEV4("div", { className: "grid grid-cols-4", children: [
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row px-2 place-items-end", children: [
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-9xl tabular-nums", children: days }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 531,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-light text-6xl", children: "d" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-light text-6xl", children: "d" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 532,
           columnNumber: 21
@@ -976,13 +959,13 @@ function Countdown(props) {
         lineNumber: 530,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row px-2 place-items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-9xl tabular-nums", children: hours }, void 0, !1, {
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row px-2 place-items-end", children: [
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-9xl tabular-nums", children: hours }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 535,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-light text-6xl", children: "h" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-light text-6xl", children: "h" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 536,
           columnNumber: 21
@@ -992,13 +975,13 @@ function Countdown(props) {
         lineNumber: 534,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row px-2 place-items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-9xl tabular-nums", children: minutes }, void 0, !1, {
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row px-2 place-items-end", children: [
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-9xl tabular-nums", children: minutes }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 539,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-light text-6xl", children: "m" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-light text-6xl", children: "m" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 540,
           columnNumber: 21
@@ -1008,13 +991,13 @@ function Countdown(props) {
         lineNumber: 538,
         columnNumber: 17
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row px-2 place-items-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-9xl tabular-nums", children: seconds }, void 0, !1, {
+      /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row px-2 place-items-end", children: [
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-9xl tabular-nums", children: seconds }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 543,
           columnNumber: 21
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-light text-6xl", children: "s" }, void 0, !1, {
+        /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-light text-6xl", children: "s" }, void 0, !1, {
           fileName: "app/routes/_index.tsx",
           lineNumber: 544,
           columnNumber: 21
@@ -1029,7 +1012,7 @@ function Countdown(props) {
       lineNumber: 529,
       columnNumber: 27
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-white font-bold text-5xl underline", children: [
+    /* @__PURE__ */ jsxDEV4("p", { className: "text-white font-bold text-5xl underline", children: [
       text,
       " \u{1F634}"
     ] }, void 0, !0, {
@@ -1045,18 +1028,18 @@ function Countdown(props) {
 }
 function AssignmentTile(props) {
   var distance = props.date.getTime() - (/* @__PURE__ */ new Date()).getTime(), days = Math.floor(distance / (1e3 * 60 * 60 * 24)) < 10 ? "0" + Math.floor(distance / (1e3 * 60 * 60 * 24)) : Math.floor(distance / (1e3 * 60 * 60 * 24)), hours = Math.floor(distance % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60)) < 10 ? "0" + Math.floor(distance % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60)) : Math.floor(distance % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60));
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-row w-full p-2 overflow-hidden", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex-none w-1/6 h-40 border-4 rounded-l-xl text-white font-medium text-xl text-center flex items-center justify-center overflow-hidden", children: props.name }, void 0, !1, {
+  return /* @__PURE__ */ jsxDEV4("div", { className: "flex flex-row w-full p-2 overflow-hidden", children: [
+    /* @__PURE__ */ jsxDEV4("div", { className: "flex-none w-1/6 h-40 border-4 rounded-l-xl text-white font-medium text-xl text-center flex items-center justify-center overflow-hidden", children: props.name }, void 0, !1, {
       fileName: "app/routes/_index.tsx",
       lineNumber: 562,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "grow h-40 border-t-4 border-b-4 text-white font-medium text-2xl underline text-center flex items-center justify-center overflow-hidden", children: props.description }, void 0, !1, {
+    /* @__PURE__ */ jsxDEV4("div", { className: "grow h-40 border-t-4 border-b-4 text-white font-medium text-2xl underline text-center flex items-center justify-center overflow-hidden", children: props.description }, void 0, !1, {
       fileName: "app/routes/_index.tsx",
       lineNumber: 565,
       columnNumber: 13
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex-none w-1/6 h-40 border-4 rounded-r-2xl text-white font-medium text-2xl text-center flex items-center justify-center overflow-hidden", children: [
+    /* @__PURE__ */ jsxDEV4("div", { className: "flex-none w-1/6 h-40 border-4 rounded-r-2xl text-white font-medium text-2xl text-center flex items-center justify-center overflow-hidden", children: [
       days,
       "d ",
       hours,
@@ -1077,10 +1060,10 @@ function getCurrentDay() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-ZOHFFNGA.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-K3N2NI5Y.js", "/build/_shared/chunk-RKUHP6BA.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-BCJ43RGM.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-HPVXRUUO.js", imports: ["/build/_shared/chunk-ONYGZ6UJ.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-WEGAKN6H.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/onboarding": { id: "routes/onboarding", parentId: "root", path: "onboarding", index: void 0, caseSensitive: void 0, module: "/build/routes/onboarding-X23YS4WC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, version: "d5e783cb", hmr: { runtime: "/build/_shared/chunk-BCJ43RGM.js", timestamp: 1696483818310 }, url: "/build/manifest-D5E783CB.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-3MSZ6C2L.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-EJJRO6WJ.js", "/build/_shared/chunk-3XJOQGLE.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-BCJ43RGM.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-L2TI5M7G.js", imports: ["/build/_shared/chunk-ONYGZ6UJ.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-WPRCN7Y2.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/onboarding": { id: "routes/onboarding", parentId: "root", path: "onboarding", index: void 0, caseSensitive: void 0, module: "/build/routes/onboarding-IVDSSE4N.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "e56ca94b", hmr: { runtime: "/build/_shared/chunk-BCJ43RGM.js", timestamp: 1696485831137 }, url: "/build/manifest-E56CA94B.js" };
 
 // server-entry-module:@remix-run/dev/server-build
-var assetsBuildDirectory = "public/build", future = { v2_dev: !0, unstable_postcss: !1, unstable_tailwind: !1, v2_errorBoundary: !0, v2_headers: !0, v2_meta: !0, v2_normalizeFormMethod: !0, v2_routeConvention: !0 }, publicPath = "/build/", entry = { module: entry_server_react_stream_exports }, routes = {
+var mode = "development", assetsBuildDirectory = "public/build", future = {}, publicPath = "/build/", entry = { module: entry_server_node_exports }, routes = {
   root: {
     id: "root",
     parentId: void 0,
@@ -1106,13 +1089,13 @@ var assetsBuildDirectory = "public/build", future = { v2_dev: !0, unstable_postc
     module: index_exports
   }
 };
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  assets,
+export {
+  assets_manifest_default as assets,
   assetsBuildDirectory,
   entry,
   future,
+  mode,
   publicPath,
   routes
-});
+};
 //# sourceMappingURL=index.js.map
