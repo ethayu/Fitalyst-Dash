@@ -1139,7 +1139,7 @@ var LiveReload = false ? () => null : function LiveReload2({
     dangerouslySetInnerHTML: {
       __html: js`
                 function remixLiveReloadConnect(config) {
-                  let REMIX_DEV_ORIGIN = ${JSON.stringify("http://localhost:3001/")};
+                  let REMIX_DEV_ORIGIN = ${JSON.stringify("http://localhost:3002/")};
                   let protocol =
                     REMIX_DEV_ORIGIN ? new URL(REMIX_DEV_ORIGIN).protocol.replace(/^http/, "ws") :
                     location.protocol === "https:" ? "wss:" : "ws:"; // remove in v2?
@@ -2146,4 +2146,4 @@ export {
    * @license MIT
    *)
 */
-//# sourceMappingURL=/build/_shared/chunk-EJJRO6WJ.js.map
+//# sourceMappingURL=/build/_shared/chunk-3F7PUAND.js.map

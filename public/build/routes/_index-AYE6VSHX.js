@@ -7071,7 +7071,7 @@ function Dash() {
         const studentsList = studentsData.map((student) => new Student(student._id, student.name, student.email, student.calendarLink, student.originalCalendarLink, student.bedtime, student.emojis));
         setStudents(studentsList);
         const storedStudentId2 = localStorage.getItem("studentId");
-        const currentStudentFromStorage = studentsList.find((student) => student._id === storedStudentId2);
+        const currentStudentFromStorage = studentsList.find((student) => student._id === "651e54cab928f5556958a14d");
         if (currentStudentFromStorage && currentStudentFromStorage.calendarLink) {
           setCurrentStudent(currentStudentFromStorage);
           setBedtime(currentStudentFromStorage.bedtime);
@@ -7813,4 +7813,4 @@ export {
   Dash as default,
   links
 };
-//# sourceMappingURL=/build/routes/_index-AQ42G6SE.js.map
+//# sourceMappingURL=/build/routes/_index-AYE6VSHX.js.map

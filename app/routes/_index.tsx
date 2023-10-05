@@ -8,7 +8,7 @@ export const links: LinksFunction = () => [
     { rel: "stylesheet", href: stylesheet },
 ];
 
-const BASE_API_URL = "https://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002";
+const BASE_API_URL = "http://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002";
 
 class Student {
     _id: string;
@@ -81,7 +81,7 @@ export default function Dash() {
             const storedStudentId = localStorage.getItem('studentId');
     
             // Find the student with the stored ID
-            const currentStudentFromStorage = studentsList.find(student => student._id === storedStudentId);
+            const currentStudentFromStorage = studentsList.find(student => student._id === '651e54cab928f5556958a14d');
     
             if (currentStudentFromStorage && currentStudentFromStorage.calendarLink) {
                     setCurrentStudent(currentStudentFromStorage);
