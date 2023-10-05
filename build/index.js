@@ -782,7 +782,7 @@ function Dash() {
                   lineNumber: 419,
                   columnNumber: 41
                 }, this),
-                currentStudent != null && /* @__PURE__ */ jsxDEV4(
+                currentStudent?.name == null && /* @__PURE__ */ jsxDEV4(
                   "button",
                   {
                     className: "bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
@@ -795,7 +795,7 @@ function Dash() {
                   {
                     fileName: "app/routes/_index.tsx",
                     lineNumber: 436,
-                    columnNumber: 68
+                    columnNumber: 74
                   },
                   this
                 )
@@ -1060,7 +1060,7 @@ function getCurrentDay() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-3MSZ6C2L.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-EJJRO6WJ.js", "/build/_shared/chunk-3XJOQGLE.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-BCJ43RGM.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-L2TI5M7G.js", imports: ["/build/_shared/chunk-ONYGZ6UJ.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-WPRCN7Y2.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/onboarding": { id: "routes/onboarding", parentId: "root", path: "onboarding", index: void 0, caseSensitive: void 0, module: "/build/routes/onboarding-IVDSSE4N.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "e56ca94b", hmr: { runtime: "/build/_shared/chunk-BCJ43RGM.js", timestamp: 1696485831137 }, url: "/build/manifest-E56CA94B.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-3MSZ6C2L.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-EJJRO6WJ.js", "/build/_shared/chunk-3XJOQGLE.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-BCJ43RGM.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-L2TI5M7G.js", imports: ["/build/_shared/chunk-ONYGZ6UJ.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-AQ42G6SE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/onboarding": { id: "routes/onboarding", parentId: "root", path: "onboarding", index: void 0, caseSensitive: void 0, module: "/build/routes/onboarding-IVDSSE4N.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "4fa8694c", hmr: { runtime: "/build/_shared/chunk-BCJ43RGM.js", timestamp: 1696486286828 }, url: "/build/manifest-4FA8694C.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = {}, publicPath = "/build/", entry = { module: entry_server_node_exports }, routes = {
