@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/build/_assets/tailwind-LKTN5O7D.css" />
+  </head>
+  <body
+    class="bg-gradient-to-tr from-fitalyst-green to-fitalyst-orange no-scrollbar h-[200vh]"
+  >
+    
+    <script>
+      function remixLiveReloadConnect(config) {
+        let REMIX_DEV_ORIGIN = "http://localhost:3001/";
+        let protocol = REMIX_DEV_ORIGIN
+          ? new URL(REMIX_DEV_ORIGIN).protocol.replace(/^http/, "ws")
+          : location.protocol === "https:"
+          ? "wss:"
+          : "ws:"; // remove in v2?
+        let hostname = location.hostname;
+        let url = new URL(protocol + "//" + hostname + "/socket");
+
+        url.port =
+          undefined || REMIX_DEV_ORIGIN
+            ? new URL(REMIX_DEV_ORIGIN).port
+            : Number(8002) || 8002;
+
+        let ws = new WebSocket(url.href);
+        ws.onmessage = async (message) => {
+          let event = JSON.parse(message.data);
+          if (event.type === "LOG") {
+            console.log(event.message);
+          }
+          if (event.type === "RELOAD") {
+            console.log("💿 Reloading window ...");
+            window.location.reload();
+          }
+          if (event.type === "HMR") {
+            if (!window.__hmr__ || !window.__hmr__.contexts) {
+              console.log("💿 [HMR] No HMR context, reloading window ...");
+              window.location.reload();
+              return;
+            }
+            if (!event.updates || !event.updates.length) return;
+            let updateAccepted = false;
+            let needsRevalidation = new Set();
+            for (let update of event.updates) {
+              console.log("[HMR] " + update.reason + " [" + update.id + "]");
+              if (update.revalidate) {
+                needsRevalidation.add(update.routeId);
+                console.log("[HMR] Revalidating [" + update.routeId + "]");
+              }
+              let imported = await import(
+                update.url + "?t=" + event.assetsManifest.hmr.timestamp
+              );
+              if (window.__hmr__.contexts[update.id]) {
+                let accepted =
+                  window.__hmr__.contexts[update.id].emit(imported);
+                if (accepted) {
+                  console.log("[HMR] Updated accepted by", update.id);
+                  updateAccepted = true;
+                }
+              }
+            }
+            if (
+              event.assetsManifest &&
+              window.__hmr__.contexts["remix:manifest"]
+            ) {
+              let accepted = window.__hmr__.contexts["remix:manifest"].emit({
+                needsRevalidation,
+                assetsManifest: event.assetsManifest,
+              });
+              if (accepted) {
+                console.log("[HMR] Updated accepted by", "remix:manifest");
+                updateAccepted = true;
+              }
+            }
+            if (!updateAccepted) {
+              console.log("[HMR] Updated rejected, reloading...");
+              window.location.reload();
+            }
+          }
+        };
+        ws.onopen = () => {
+          if (config && typeof config.onOpen === "function") {
+            config.onOpen();
+          }
+        };
+        ws.onclose = (event) => {
+          if (event.code === 1006) {
+            console.log(
+              "Remix dev asset server web socket closed. Reconnecting..."
+            );
+            setTimeout(
+              () =>
+                remixLiveReloadConnect({
+                  onOpen: () => window.location.reload(),
+                }),
+              1000
+            );
+          }
+        };
+        ws.onerror = (error) => {
+          console.log("Remix dev asset server web socket error:");
+          console.error(error);
+        };
+      }
+      remixLiveReloadConnect();
+    </script>
+    <div class="scroll-smooth">
+      <div class="h-[100vh]">
+        <div class="flex flex-col space-y-10 justify-center h-full">
+          <div class="flex flex-row place-self-center">
+            <img
+              src="icons/Carrot_GreenHalo.svg"
+              class="place-self-center bg-contain w-96 h-96"
+            />
+            <div class="flex flex-col place-self-center place-items-end">
+              <div class="grid grid-cols-4">
+                <div class="flex flex-row px-2 place-items-end">
+                  <p class="text-white font-bold text-9xl tabular-nums">NaN</p>
+                  <p class="text-white font-light text-6xl">d</p>
+                </div>
+                <div class="flex flex-row px-2 place-items-end">
+                  <p class="text-white font-bold text-9xl tabular-nums">NaN</p>
+                  <p class="text-white font-light text-6xl">h</p>
+                </div>
+                <div class="flex flex-row px-2 place-items-end">
+                  <p class="text-white font-bold text-9xl tabular-nums">NaN</p>
+                  <p class="text-white font-light text-6xl">m</p>
+                </div>
+                <div class="flex flex-row px-2 place-items-end">
+                  <p class="text-white font-bold text-9xl tabular-nums">NaN</p>
+                  <p class="text-white font-light text-6xl">s</p>
+                </div>
+              </div>
+              <p class="text-white font-bold text-5xl underline">
+                &#x27;til<!-- -->
+                😴
+              </p>
+            </div>
+          </div>
+          <p class="text-white font-bold text-5xl place-self-center">
+            Hey there, it&#x27;s Thursday.
+          </p>
+          <div class="flex flex-col place-self-center space-y-2">
+            <p class="text-white font-medium text-3xl place-self-center">
+              How are you feeling today?
+            </p>
+            <div class="flex flex-row place-self-center space-x-2">
+              <button class="text-5xl">😃</button
+              ><button class="text-5xl">💩</button
+              ><button class="text-5xl">😔</button
+              ><button class="text-5xl">😡</button>
+            </div>
+          </div>
+        </div>
+        <button class="fixed bottom-4 left-4">
+          <img src="icons/settings.svg" />
+        </button>
+      </div>
+      <div class="flex flex-col w-full h-[100vh]">
+        <img
+          src="icons/up-arrow.svg"
+          class="bg-contain place-self-center animate-bounce cursor-pointer p-8"
+        />
+        <div class="flex flex-col justify-center gap-0"></div>
+      </div>
+    </div>
+    <link rel="modulepreload" href="/build/entry.client-HJKLQ5WT.js" /><link
+      rel="modulepreload"
+      href="/build/_shared/chunk-ZWGWGGVF.js"
+    /><link rel="modulepreload" href="/build/_shared/chunk-GIAAE3CH.js" /><link
+      rel="modulepreload"
+      href="/build/_shared/chunk-4QM5N6B7.js"
+    /><link rel="modulepreload" href="/build/_shared/chunk-RKUHP6BA.js" /><link
+      rel="modulepreload"
+      href="/build/_shared/chunk-XU7DNSPJ.js"
+    /><link rel="modulepreload" href="/build/_shared/chunk-77CVAUO2.js" /><link
+      rel="modulepreload"
+      href="/build/_shared/chunk-UWV35TSL.js"
+    /><link rel="modulepreload" href="/build/_shared/chunk-BOXFZXVX.js" /><link
+      rel="modulepreload"
+      href="/build/_shared/chunk-PNG5AS42.js"
+    /><link rel="modulepreload" href="/build/_shared/chunk-YQVIYTPS.js" /><link
+      rel="modulepreload"
+      href="/build/root-EUCWHGYL.js"
+    /><link rel="modulepreload" href="/build/routes/_index-GGIY5IUX.js" />
+    <script>
+      window.__remixContext = {
+        url: "/",
+        state: {
+          loaderData: { root: null, "routes/_index": null },
+          actionData: null,
+          errors: null,
+        },
+        future: {
+          v2_dev: true,
+          unstable_postcss: false,
+          unstable_tailwind: false,
+          v2_errorBoundary: true,
+          v2_headers: true,
+          v2_meta: true,
+          v2_normalizeFormMethod: true,
+          v2_routeConvention: true,
+        },
+      };
+    </script>
+    <script type="module" async="">
+      import "/build/_shared/chunk-77CVAUO2.js";
+      import "/build/manifest-64CBECCE.js";
+      import * as route0 from "/build/root-EUCWHGYL.js";
+      import * as route1 from "/build/routes/_index-GGIY5IUX.js";
+      window.__remixRouteModules = { root: route0, "routes/_index": route1 };
+
+      import("/build/entry.client-HJKLQ5WT.js");
+    </script>
+  </body>
+</html>

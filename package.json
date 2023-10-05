@@ -1,0 +1,44 @@
+{
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "INLINE_RUNTIME_CHUNK=false remix build",
+    "dev": "remix dev",
+    "start": "remix-serve build",
+    "typecheck": "tsc",
+    "build-static": "wget -r -nH -i static-urls.txt -P static",
+    "serve-static": "serve static"
+  },
+  "dependencies": {
+    "@babel/preset-react": "^7.22.15",
+    "@remix-run/css-bundle": "^1.19.2",
+    "@remix-run/node": "^1.19.2",
+    "@remix-run/react": "^1.19.2",
+    "@remix-run/serve": "^1.19.2",
+    "ical.js": "^1.5.0",
+    "isbot": "^3.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remix": "^1.19.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.20",
+    "@remix-run/dev": "^1.19.2",
+    "@remix-run/eslint-config": "^1.19.2",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.0.11",
+    "eslint": "^8.38.0",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.0.4"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "name": "dash-extension-main-3",
+  "description": "- [Remix Docs](https://remix.run/docs)",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "author": "",
+  "license": "ISC"
+}
