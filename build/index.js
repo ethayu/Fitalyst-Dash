@@ -209,7 +209,7 @@ function Onboarding() {
   let navigate = useNavigate(), [student, setStudent] = useState(new Student("", "")), [page, setPage] = useState(0), [question, setQuestion] = useState("What is your name?"), [input, setInput] = useState(""), [type, setType] = useState("text"), [calendarLink, setCalendarLink] = useState(""), [bedtime, setBedtime] = useState("23:00"), [emojis, setEmojis] = useState([]);
   async function createStudent(bedtimeValue) {
     try {
-      let response = await fetch("http://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002/students", {
+      let response = await fetch("https://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002/students", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -244,7 +244,7 @@ function Onboarding() {
           alert("Please enter your email.");
           return;
         }
-        setStudent((prev) => ({ ...prev, email: input2 })), setQuestion("Please provide your Google Calendar link.");
+        setStudent((prev) => ({ ...prev, email: input2 })), setQuestion("Please provide your Canvas Calendar link.");
         break;
       case 2:
         setCalendarLink(input2), setQuestion("When is your bedtime?"), setType("time");
@@ -1060,7 +1060,7 @@ function getCurrentDay() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-6MFR6VSF.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-3F7PUAND.js", "/build/_shared/chunk-3XJOQGLE.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-BCJ43RGM.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-LKJM554U.js", imports: ["/build/_shared/chunk-ONYGZ6UJ.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-AYE6VSHX.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/onboarding": { id: "routes/onboarding", parentId: "root", path: "onboarding", index: void 0, caseSensitive: void 0, module: "/build/routes/onboarding-IVDSSE4N.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "25a4017e", hmr: { runtime: "/build/_shared/chunk-BCJ43RGM.js", timestamp: 1696486934786 }, url: "/build/manifest-25A4017E.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-3MSZ6C2L.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-EJJRO6WJ.js", "/build/_shared/chunk-3XJOQGLE.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-BCJ43RGM.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-L2TI5M7G.js", imports: ["/build/_shared/chunk-ONYGZ6UJ.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-AYE6VSHX.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/onboarding": { id: "routes/onboarding", parentId: "root", path: "onboarding", index: void 0, caseSensitive: void 0, module: "/build/routes/onboarding-CCFOJ36N.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "fe1a6a57", hmr: { runtime: "/build/_shared/chunk-BCJ43RGM.js", timestamp: 1696529198434 }, url: "/build/manifest-FE1A6A57.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = {}, publicPath = "/build/", entry = { module: entry_server_node_exports }, routes = {

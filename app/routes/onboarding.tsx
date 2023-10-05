@@ -47,7 +47,7 @@ export default function Onboarding() {
 
     async function createStudent(bedtimeValue: string) {
         try {
-            const response = await fetch(`http://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002/students`, {
+            const response = await fetch(`https://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002/students`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

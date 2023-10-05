@@ -70,7 +70,7 @@ function Onboarding() {
   const [emojis, setEmojis] = (0, import_react.useState)([]);
   async function createStudent(bedtimeValue) {
     try {
-      const response = await fetch(`http://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002/students`, {
+      const response = await fetch(`https://ec2-3-144-236-30.us-east-2.compute.amazonaws.com:3002/students`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -116,7 +116,7 @@ function Onboarding() {
           ...prev,
           email: input2
         }));
-        setQuestion("Please provide your Google Calendar link.");
+        setQuestion("Please provide your Canvas Calendar link.");
         break;
       case 2:
         setCalendarLink(input2);
@@ -214,4 +214,4 @@ export {
   Onboarding as default,
   links
 };
-//# sourceMappingURL=/build/routes/onboarding-IVDSSE4N.js.map
+//# sourceMappingURL=/build/routes/onboarding-CCFOJ36N.js.map
